@@ -1,9 +1,37 @@
 class Atm:
+
+    # static variable
+    __counter = 1
     def __init__(self):
-        self.pin = ""
-        self.balance = 0
-        self.menu()
+
+        # instance variable
+        self.__pin = ""
+        self.__balance = 0
+        self.sno = Atm.__counter
+        Atm.__counter = Atm.__counter + 1
+        # self.menu()
     
+    @staticmethod
+    def get_counter():
+        return Atm.__counter
+    
+    @staticmethod
+    def set_counter(new_counter):
+        if isinstance(new_counter,int):
+            Atm.__counter = new_counter
+        else:
+            print("invalid")
+
+    def get_pin (self):
+        return self.__pin
+    
+    def set_pin(self, new_pin):
+        if isinstance(new_pin, str): 
+            self.__pin = new_pin
+            print("Pin updated")
+        else:
+            print("Invalid pin. PIN must be a string.")
+
     def menu(self):
         while True:
             option = input('''
@@ -21,7 +49,7 @@ class Atm:
             elif option == "3":
                 self.withdrawal()
             elif option == "4":
-                self.balance_check()
+                self.__balance_check()
             elif option == "5":
                 self.exit()
                 break  # Exit the loop
@@ -29,12 +57,12 @@ class Atm:
                 print("Invalid option, please try again.")
     
     def create_pin(self):
-        self.pin = input("Enter a new PIN: ")
-        print(f"Your PIN {self.pin} has been set successfully!") 
+        self.__pin = input("Enter a new PIN: ")
+        print(f"Your PIN {self.__pin} has been set successfully!") 
     
     def check_pin(self):
         pin = input('Enter your PIN: ')
-        if pin == self.pin:
+        if pin == self.__pin:
             return True
         else:
             print("Invalid PIN. Please try again.")
@@ -43,24 +71,38 @@ class Atm:
     def deposit(self):
         if self.check_pin():
             amount = int(input("Enter the deposit amount: "))
-            self.balance += amount
-            print(f"You deposited {amount}. Your new balance is {self.balance}")
+            self.__balance += amount
+            print(f"You deposited {amount}. Your new balance is {self.__balance}")
     
     def withdrawal(self):
         if self.check_pin():
             amount = int(input("Enter the withdrawal amount: "))
-            if self.balance >= amount:
-                self.balance -= amount
-                print(f"You withdrew {amount}. Your new balance is {self.balance}")
+            if self.__balance >= amount:
+                self.__balance -= amount
+                print(f"You withdrew {amount}. Your new balance is {self.__balance}")
             else:
                 print("Insufficient balance.")
     
     def balance_check(self):
         if self.check_pin():
-            print(f"Your current balance is {self.balance}")
+            print(f"Your current balance is {self.__balance}")
     
     def exit(self):
         print("Thank you for using our ATM. Have a nice day!")
 
 # Instantiate the ATM
 sbi = Atm()
+hdfc =Atm()
+
+print(sbi.sno)
+print(hdfc.sno)
+
+# print(sbi.get_pin())
+# new_pin = "283972"
+# sbi.set_pin(new_pin)
+# print(sbi.get_pin())
+
+
+
+
+
